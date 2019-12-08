@@ -15,6 +15,7 @@ void setup()
 {
     onboardRGB.begin();
 }
+
 uint16_t random_colour()
 {
     static uint32_t shift_register=0xa5928241;
@@ -31,36 +32,39 @@ uint16_t random_colour()
 }
 int main()
 {
+    int square_size=20;
     int xofs,yofs;
     setup();
     SPI.begin();
     Display.begin(&SPI);
     xofs = yofs = 0;
-    xofs = 0;
+    xofs = 0;    
     while(1)
     {        
-        Display.fillRectangle(xofs,yofs,20,20,random_colour());
+        Display.fillRectangle(xofs,yofs,square_size,square_size,random_colour());
         onboardRGB.red_on();        
-        delay(100000);        
+        delay(10000);        
         onboardRGB.red_off();
-        delay(100000);        
+        delay(10000);        
         onboardRGB.green_on();        
-        delay(100000);         
+        delay(10000);         
         onboardRGB.green_off();
-        delay(100000);        
+        delay(10000);        
         onboardRGB.blue_on();        
-        delay(100000);         
+        delay(10000);         
         onboardRGB.blue_off();
-        delay(100000);        
+        delay(10000);        
         
-        xofs+=20;
+        xofs+=square_size;
         
-        if (xofs>60)
+        if (xofs>80-square_size)
         {
             xofs = 0;        
-            yofs +=20;
-            if (yofs > 140)
-                yofs=0;
+            yofs +=square_size;
+            if (yofs > 160-square_size)
+            {
+                yofs=0;                
+            }
         }
     }
 }
